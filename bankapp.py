@@ -64,6 +64,7 @@ def write_transaction_to_db(username, transaction_type, amount, cursor, conn):
         # Update the balance table with the current balance
         cursor.execute("INSERT INTO balance (username, balance, update_time) VALUES (?, ?, ?)",
                        (username, current_balance, current_datetime))
+
     else:
         # Insert regular transaction record
         cursor.execute(
