@@ -1,0 +1,14 @@
+
+2023-10-31 02:24:46 - User: Mookho - Check Balance - Balance: R139988000.0
+2023-10-31 02:25:11 - User: Mookho - Withdrawal - Balance: R34000.0
+2023-10-31 09:22:18 - User: Mookho - Check Balance - Balance: R139954000.0
+2023-10-31 09:22:51 - User: Mookho - Withdrawal - Balance: R300000.0
+2023-10-31 09:37:10 - User: teboho - Check Balance - Balance: R2389224865808.67
+2023-10-31 09:45:40 - User: teboho - Check Balance - Balance: R2389224865808.67
+2023-10-31 09:45:55 - User: teboho - Withdrawal - Balance: R230000.0
+2023-10-31 09:46:16 - User: teboho - Deposit - Balance: R36500000.0
+2023-10-31 14:05:26 - User: Mookho - Check Balance - Balance: R139654000.0
+2023-10-31 14:05:52 - User: Mookho - Withdrawal - Balance: R450000.0
+2023-10-31 14:06:12 - User: Mookho - Check Balance - Balance: R139204000.0
+2023-10-31 14:25:30 - User: Lwando - Check Balance - Balance: R0
+2023-10-31 14:27:41 - User: Lwando - Deposit - Balance: R5000.0
