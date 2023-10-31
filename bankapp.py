@@ -101,11 +101,23 @@ def login():
 
     if user_data:
         print("Login successful!")
-        return User(user_data[1], user_data[2])
+        # Fetch and display the current balance immediately after login
+        cursor.execute(
+            "SELECT SUM(amount) FROM transactions WHERE username=? AND transaction_type='Deposit'",
+            (username,))
+        deposited_amount = cursor.fetchone()[0] or 0
+        cursor.execute(
+            "SELECT SUM(amount) FROM transactions WHERE username=? AND transaction_type='Withdrawal'",
+            (username,))
+        withdrawn_amount = cursor.fetchone()[0] or 0
+        current_balance = deposited_amount - withdrawn_amount
+        print("Your current balance: R", current_balance)
+
+        # Return the User object with the username, password, and current balance
+        return User(username, password)
     else:
         print("Invalid username or password. Please try again.")
         return None
-
 def main():
     while True:
         try:
