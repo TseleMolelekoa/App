@@ -43,12 +43,13 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS transactions
 conn.commit()
 
 
-def write_transaction_to_db(username, transaction_type, amount, cursor, conn):   # Get the current date and time
+def write_transaction_to_db(username, transaction_type, amount, cursor, conn):
+    # Get the current date and time
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Check if the transaction type is 'Check Balance'
     if transaction_type == "Check Balance":
-        # Retrieve current balance and insert a transaction record with the actual balance
+        # Retrieve the current balance and insert a transaction record with the actual balance
         cursor.execute("SELECT SUM(amount) FROM transactions WHERE username=? AND transaction_type='Deposit'",
                        (username,))
         deposited_amount = cursor.fetchone()[0] or 0
@@ -59,6 +60,10 @@ def write_transaction_to_db(username, transaction_type, amount, cursor, conn):  
         cursor.execute(
             "INSERT INTO transactions (username, transaction_type, amount, transaction_time) VALUES (?, ?, ?, ?)",
             (username, transaction_type, current_balance, current_datetime))
+
+        # Update the balance table with the current balance
+        cursor.execute("INSERT INTO balance (username, balance, update_time) VALUES (?, ?, ?)",
+                       (username, current_balance, current_datetime))
     else:
         # Insert regular transaction record
         cursor.execute(

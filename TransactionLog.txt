@@ -12,3 +12,11 @@
 2023-10-31 14:06:12 - User: Mookho - Check Balance - Balance: R139204000.0
 2023-10-31 14:25:30 - User: Lwando - Check Balance - Balance: R0
 2023-10-31 14:27:41 - User: Lwando - Deposit - Balance: R5000.0
+2023-10-31 15:22:15 - User: Tsele - Deposit - Balance: R450000.0
+2023-10-31 15:23:16 - User: Tsele - Deposit - Balance: R450000.0
+2023-10-31 15:23:34 - User: Tsele - Withdrawal - Balance: R34000.0
+2023-10-31 15:44:44 - User: Mookho - Withdrawal - Balance: R450000.0
+2023-10-31 15:47:42 - User: mookho - Deposit - Balance: R476000000.0
+2023-10-31 15:48:15 - User: mookho - Withdrawal - Balance: R38400.0
+2023-10-31 15:49:54 - User: mookho - Check Balance - Balance: R475961600.0
+2023-10-31 15:50:58 - User: Mookho - Check Balance - Balance: R138754000.0
