@@ -1,3 +1,4 @@
+import re
 import sqlite3
 from datetime import datetime
 
@@ -76,9 +77,27 @@ def write_transaction_log(username, transaction, balance):
 
 
 def create_account():
-    # Create a new user account if the username does not already exist in the database
-    username = input("Enter your username: ")
-    password = input("Enter your password: ")
+
+    # Create a new user account if the username and password meet the criteria
+    1
+     # Username should consist of alphanumeric characters and underscores, 4-20 characters in length
+    username_pattern = r"^[a-zA-Z0-9_]{4,20}$" 
+    
+    # Password should contain at least one lowercase, one uppercase, one digit, and be at least 8 characters long
+    password_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$"  
+    while True:
+        username = input("Enter your username: ")
+        if not re.match(username_pattern, username):
+            print("Invalid username format. Username should consist of alphanumeric characters and underscores, 4-20 characters in length.")
+        else:
+            break
+
+    while True:
+        password = input("Enter your password: ")
+        if not re.match(password_pattern, password):
+            print("Invalid password format. Password should contain at least one lowercase, one uppercase, one digit, and be at least 8 characters long.")
+        else:
+            break
 
     # Check if the username already exists in the database
     cursor.execute("SELECT * FROM users WHERE username=?", (username,))
