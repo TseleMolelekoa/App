@@ -85,7 +85,7 @@ def write_transaction_log(username, transaction, balance):
 def create_account():
 
     # Create a new user account if the username and password meet the criteria
-    1
+
      # Username should consist of alphanumeric characters and underscores, 4-20 characters in length
     username_pattern = r"^[a-zA-Z0-9_]{4,20}$" 
     
