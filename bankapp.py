@@ -1,3 +1,4 @@
+import re
 import sqlite3
 from datetime import datetime
 
@@ -42,14 +43,13 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS transactions
 
 conn.commit()
 
-
-def write_transaction_to_db(username, transaction_type, amount, cursor, conn):
-    # Get the current date and time
+  # Get the current date and time
+def write_transaction_to_db(username, transaction_type, amount, cursor, conn): 
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Check if the transaction type is 'Check Balance'
     if transaction_type == "Check Balance":
-        # Retrieve the current balance and insert a transaction record with the actual balance
+        # Retrieve current balance and insert a transaction record with the actual balance
         cursor.execute("SELECT SUM(amount) FROM transactions WHERE username=? AND transaction_type='Deposit'",
                        (username,))
         deposited_amount = cursor.fetchone()[0] or 0
@@ -60,11 +60,6 @@ def write_transaction_to_db(username, transaction_type, amount, cursor, conn):
         cursor.execute(
             "INSERT INTO transactions (username, transaction_type, amount, transaction_time) VALUES (?, ?, ?, ?)",
             (username, transaction_type, current_balance, current_datetime))
-
-        # Update the balance table with the current balance
-        cursor.execute("INSERT INTO balance (username, balance, update_time) VALUES (?, ?, ?)",
-                       (username, current_balance, current_datetime))
-
     else:
         # Insert regular transaction record
         cursor.execute(
@@ -82,9 +77,27 @@ def write_transaction_log(username, transaction, balance):
 
 
 def create_account():
-    # Create a new user account if the username does not already exist in the database
-    username = input("Enter your username: ")
-    password = input("Enter your password: ")
+
+    # Create a new user account if the username and password meet the criteria
+    1
+     # Username should consist of alphanumeric characters and underscores, 4-20 characters in length
+    username_pattern = r"^[a-zA-Z0-9_]{4,20}$" 
+    
+    # Password should contain at least one lowercase, one uppercase, one digit, and be at least 8 characters long
+    password_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$"  
+    while True:
+        username = input("Enter your username: ")
+        if not re.match(username_pattern, username):
+            print("Invalid username format. Username should consist of alphanumeric characters and underscores, 4-20 characters in length.")
+        else:
+            break
+
+    while True:
+        password = input("Enter your password: ")
+        if not re.match(password_pattern, password):
+            print("Invalid password format. Password should contain at least one lowercase, one uppercase, one digit, and be at least 8 characters long.")
+        else:
+            break
 
     # Check if the username already exists in the database
     cursor.execute("SELECT * FROM users WHERE username=?", (username,))
@@ -128,7 +141,7 @@ def main():
     while True:
         try:
             # User interface
-            print("=================================================\n----------Welcome to the 5STARS_BankApp!--------- \n=================================================")
+            print("=================================================\n----------Welcome to the STARS_BankApp!--------- \n=================================================")
             print("1. Create Account")
             print("2. Login")
             print("3. Exit")
@@ -165,6 +178,7 @@ def main():
                             write_transaction_log(user.username, "Check Balance",
                                                   current_balance)  # Log the transaction
                         # Log the transaction
+                        
                         elif option == "2":
                             # Make a transaction
                             print("Current Balance: R", user.account.balance)
@@ -176,6 +190,7 @@ def main():
                                 if transaction_type == "deposit":
                                     amount = float(input("How much would you like to deposit? R"))
                                     deposited_amount = user.account.deposit(amount)
+                                    
                                     # Pass cursor and conn to the write_transaction_to_db function
                                     write_transaction_to_db(user.username, "Deposit", deposited_amount, cursor, conn)
                                     write_transaction_log(user.username, "Deposit",
@@ -183,7 +198,10 @@ def main():
                                     print("Deposit successful! Your new balance: R", user.account.balance)
                                 elif transaction_type == "withdrawal":
                                     amount = float(input("How much would you like to withdraw? R"))
-                                    withdrawn_amount = user.account.withdraw(amount)
+                                    if amount < 0:
+                                        print("Invalid withdrawal aount. PLeae enter a positive number")
+                                    else:
+                                         withdrawn_amount  = user.account.withdraw(amount)
                                     if isinstance(withdrawn_amount, str):
                                         print(withdrawn_amount)
                                     else:
@@ -200,6 +218,10 @@ def main():
                             else:
                                 print("Invalid choice! Please enter Yes or No.")
                         elif option == "3":
+                       
+                            
+                            
+                            
                             # View transaction history
                             print("Transaction History:")
                             cursor.execute("SELECT * FROM transactions WHERE username=?", (user.username,))
