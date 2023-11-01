@@ -2,26 +2,30 @@
 bank_data_file = "Bank_Data.txt"
 transaction_log_file = "Transaction_log.txt"
 
-
+from datetime import datetime
 
 # Function to display the current balance
 def display_balance(balance):
     print(f"Current Balance: R{balance:.2f}")
 
-# Function to make a deposit
-def make_deposit(balance, amount):
-    balance += amount
+# Function to log a transaction
+def log_transaction(username, transaction_type, amount):
     with open(transaction_log_file, "a") as transaction_file:
-        transaction_file.write(f"Deposit: +R{amount:.2f}\n")
+        current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        transaction_file.write(f"User: {username}, Date: {current_datetime}, Type: {transaction_type}, Amount: R{amount:.2f}\n")
+
+# Function to make a deposit
+def make_deposit(username, balance, amount):
+    balance += amount
+    log_transaction(username, "Deposit", amount)
     display_balance(balance)
     return balance
 
 # Function to make a withdrawal
-def make_withdrawal(balance, amount):
+def make_withdrawal(username, balance, amount):
     if amount <= balance:
         balance -= amount
-        with open(transaction_log_file, "a") as transaction_file:
-            transaction_file.write(f"Withdrawal: -R{amount:.2f}\n")
+        log_transaction(username, "Withdrawal", amount)
         display_balance(balance)
         return balance
     else:
@@ -82,7 +86,7 @@ while True:
                         try:
                             amount = float(input())
                             if amount > 0:
-                                balance = make_deposit(balance, amount)
+                                balance = make_deposit(username, balance, amount)
                             else:
                                 print("Invalid deposit amount.")
                         except ValueError:
@@ -93,7 +97,7 @@ while True:
                         try:
                             amount = float(input())
                             if amount > 0:
-                                balance = make_withdrawal(balance, amount)
+                                balance = make_withdrawal(username, balance, amount)
                         except ValueError:
                             print("Invalid input. Please enter a valid amount.")
                     else:
