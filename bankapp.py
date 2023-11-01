@@ -2,6 +2,8 @@
 bank_data_file = "Bank_Data.txt"
 transaction_log_file = "Transaction_log.txt"
 
+
+
 # Function to display the current balance
 def display_balance(balance):
     print(f"Current Balance: R{balance:.2f}")
@@ -76,7 +78,7 @@ while True:
 
                     if transaction_type == "1":
                         display_balance(balance)
-                        print("How much would you like to deposit in Rands?")
+                        print("How much would you like to deposit?")
                         try:
                             amount = float(input())
                             if amount > 0:
@@ -87,7 +89,7 @@ while True:
                             print("Invalid input. Please enter a valid amount.")
                     elif transaction_type == "2":
                         display_balance(balance)
-                        print("How much would you like to withdraw in Rands?")
+                        print("How much would you like to withdraw?")
                         try:
                             amount = float(input())
                             if amount > 0:
