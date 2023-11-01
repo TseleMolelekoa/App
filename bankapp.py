@@ -42,8 +42,8 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS transactions
 
 conn.commit()
 
-
-def write_transaction_to_db(username, transaction_type, amount, cursor, conn):   # Get the current date and time
+  # Get the current date and time
+def write_transaction_to_db(username, transaction_type, amount, cursor, conn): 
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Check if the transaction type is 'Check Balance'
@@ -122,7 +122,7 @@ def main():
     while True:
         try:
             # User interface
-            print("=================================================\n----------Welcome to the 5STARS_BankApp!--------- \n=================================================")
+            print("=================================================\n----------Welcome to the STARS_BankApp!--------- \n=================================================")
             print("1. Create Account")
             print("2. Login")
             print("3. Exit")
@@ -159,6 +159,7 @@ def main():
                             write_transaction_log(user.username, "Check Balance",
                                                   current_balance)  # Log the transaction
                         # Log the transaction
+                        
                         elif option == "2":
                             # Make a transaction
                             print("Current Balance: R", user.account.balance)
@@ -170,6 +171,7 @@ def main():
                                 if transaction_type == "deposit":
                                     amount = float(input("How much would you like to deposit? R"))
                                     deposited_amount = user.account.deposit(amount)
+                                    
                                     # Pass cursor and conn to the write_transaction_to_db function
                                     write_transaction_to_db(user.username, "Deposit", deposited_amount, cursor, conn)
                                     write_transaction_log(user.username, "Deposit",
@@ -177,7 +179,10 @@ def main():
                                     print("Deposit successful! Your new balance: R", user.account.balance)
                                 elif transaction_type == "withdrawal":
                                     amount = float(input("How much would you like to withdraw? R"))
-                                    withdrawn_amount = user.account.withdraw(amount)
+                                    if amount < 0:
+                                        print("Invalid withdrawal aount. PLeae enter a positive number")
+                                    else:
+                                         withdrawn_amount  = user.account.withdraw(amount)
                                     if isinstance(withdrawn_amount, str):
                                         print(withdrawn_amount)
                                     else:
@@ -194,6 +199,10 @@ def main():
                             else:
                                 print("Invalid choice! Please enter Yes or No.")
                         elif option == "3":
+                       
+                            
+                            
+                            
                             # View transaction history
                             print("Transaction History:")
                             cursor.execute("SELECT * FROM transactions WHERE username=?", (user.username,))

@@ -12,3 +12,4 @@
 2023-10-31 14:06:12 - User: Mookho - Check Balance - Balance: R139204000.0
 2023-10-31 14:25:30 - User: Lwando - Check Balance - Balance: R0
 2023-10-31 14:27:41 - User: Lwando - Deposit - Balance: R5000.0
+2023-11-01 10:14:26 - User: Asekona - Deposit - Balance: R200.0
