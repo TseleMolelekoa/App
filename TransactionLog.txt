@@ -15,3 +15,15 @@
 2023-11-01 10:14:26 - User: Asekona - Deposit - Balance: R200.0
 2023-11-01 11:50:26 - User: Sisanda - Deposit - Balance: R20.0
 2023-11-01 11:51:40 - User: Sisanda - Withdrawal - Balance: R10.0
+2023-11-01 11:53:01 - User: Tsele - Deposit - Balance: R349034.0
+2023-11-01 11:53:34 - User: Tsele - Withdrawal - Balance: R4500.0
+2023-11-01 11:50:26 - User: Sisanda - Deposit - Balance: R20.0
+2023-11-01 11:51:40 - User: Sisanda - Withdrawal - Balance: R10.0
+2023-11-01 11:53:01 - User: Tsele - Deposit - Balance: R349034.0
+2023-11-01 11:53:34 - User: Tsele - Withdrawal - Balance: R4500.0
+2023-11-01 11:50:26 - User: Sisanda - Deposit - Balance: R20.0
+2023-11-01 11:51:40 - User: Sisanda - Withdrawal - Balance: R10.0
+2023-11-01 11:53:01 - User: Tsele - Deposit - Balance: R349034.0
+2023-11-01 11:53:34 - User: Tsele - Withdrawal - Balance: R4500.0
+2023-11-01 11:50:26 - User: Sisanda - Deposit - Balance: R20.0
+2023-11-01 11:51:40 - User: Sisanda - Withdrawal - Balance: R10.0
