@@ -32,16 +32,22 @@ class BankAccount:
         else:
             return "Insufficient funds!"
 
+# Create a new SQLite database and define tables
 conn = sqlite3.connect('bankapp.db')
 cursor = conn.cursor()
 
+# Define the 'users' table
 cursor.execute('''CREATE TABLE IF NOT EXISTS users
                   (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)''')
 
+# Define the 'transactions' table
 cursor.execute('''CREATE TABLE IF NOT EXISTS transactions
                   (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, transaction_type TEXT, amount REAL, transaction_time DATETIME)''')
 
+# Commit the changes to the database 
 conn.commit()
+
+
 
   # Get the current date and time
 def write_transaction_to_db(username, transaction_type, amount, cursor, conn): 
