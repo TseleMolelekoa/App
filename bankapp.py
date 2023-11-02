@@ -63,8 +63,13 @@ def register():
     username = input("Enter your username: ").strip()
     password = input("Enter your password: ").strip()
 
+    # Check if the username already exists
     if username in user_data:
-        print("Username already exists. Registration failed.")
+        # Check if the entered password is different
+        if user_data[username]["password"] != password:
+            print("You can register with the same username but a different password.")
+        else:
+            print("Username and password combination already exists. Registration failed.")
     else:
         user_data[username] = {
             "password": password,
