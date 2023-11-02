@@ -13,7 +13,7 @@ def log_transaction(username, transaction_type, amount):
     if "transactions" not in user_data[username]:
         user_data[username]["transactions"] = []
 
-    current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    current_datetime = datetime.now().strftime("%Y-%m-d %H:%M:%S")
     transaction = {
         "Date": current_datetime,
         "Type": transaction_type,
@@ -44,7 +44,7 @@ def make_withdrawal(username, amount):
 def save_user_data():
     with open('Bank_Data.txt', 'w') as data_file:
         for username, data in user_data.items():
-            data_file.write(f"{username} {data['password']}\n")
+            data_file.write(f"{username} {data['password']} {data['balance']}\n")
 
 # Function to load user data from the Bank_Data.txt file
 def load_user_data():
@@ -67,9 +67,9 @@ def load_user_data():
 
 load_user_data()  # Load user data from Bank_Data.txt
 
-  # Function for user registration
+# Function for user registration
 def register():
-    print("User Registration")
+    print(" register here:")
     username = input("Enter your username: ").strip()
     
     if not username:
@@ -107,8 +107,8 @@ def login():
     print("Invalid username or password. Please try again.")
     return None
 
-
 # Main application loop
+print("*****Welcome to Stars bank App*****")
 while True:
     print("1. Register")
     print("2. Login")
@@ -168,7 +168,7 @@ while True:
                 else:
                     print("Invalid choice. Please try again.")
     elif choice == "3":
-        print("Thank you for using the bank app. Goodbye!")
+        print("Thank you for using the 5 Stars Bank App. Goodbye!")
         break
     else:
         print("Invalid choice. Please try again.")
