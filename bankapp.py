@@ -44,7 +44,7 @@ def make_withdrawal(username, amount):
 def save_user_data():
     with open('Bank_Data.txt', 'w') as data_file:
         for username, data in user_data.items():
-            data_file.write(f"{username} {data['password']} {data['balance']}\n")
+            data_file.write(f"{username} {data['password']}\n")
 
 # Function to load user data from the Bank_Data.txt file
 def load_user_data():
@@ -55,10 +55,9 @@ def load_user_data():
                 if len(parts) >= 3:
                     username = parts[0]
                     password = parts[1]
-                    balance = float(parts[2])
+                    
                     user_data[username] = {
                         "password": password,
-                        "balance": balance,
                         "transactions": []
                     }
     except FileNotFoundError:
@@ -108,7 +107,7 @@ def login():
     return None
 
 # Main application loop
-print("*****Welcome to Stars bank App*****")
+print("*****Welcome to Five Stars bank App*****")
 while True:
     print("1. Register")
     print("2. Login")
