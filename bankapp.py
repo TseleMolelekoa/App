@@ -25,20 +25,27 @@ def log_transaction(username, transaction_type, amount):
     with open('transaction_log.txt', 'a') as log_file:
         log_file.write(f"User: {username}, Date: {transaction['Date']}, Type: {transaction['Type']}, Amount: R{transaction['Amount']:.2f}\n")
 
+# Function to check if an amount is greater than or equal to 20 and is a multiple of 10
+def is_valid_amount(amount):
+    return amount >= 20 and amount % 10 == 0
+
 # Function to make a deposit
 def make_deposit(username, amount):
-    user_data[username]["balance"] += amount
-    log_transaction(username, "Deposit", amount)
-    display_balance(username)
+    if is_valid_amount(amount):
+        user_data[username]["balance"] += amount
+        log_transaction(username, "Deposit", amount)
+        display_balance(username)
+    else:
+        print("Invalid deposit amount. Deposit amount must be greater than or equal to 20 and a multiple of 10.")
 
 # Function to make a withdrawal
 def make_withdrawal(username, amount):
-    if amount <= user_data[username]["balance"]:
+    if is_valid_amount(amount) and amount <= user_data[username]["balance"]:
         user_data[username]["balance"] -= amount
         log_transaction(username, "Withdrawal", amount)
         display_balance(username)
     else:
-        print("Insufficient funds. Withdrawal canceled.")
+        print("Invalid withdrawal amount. Withdrawal amount must be greater than or equal to 20, a multiple of 10, and within your balance.")
 
 # Function to save user data to the Bank_Data.txt file
 def save_user_data():
@@ -58,6 +65,7 @@ def load_user_data():
                     
                     user_data[username] = {
                         "password": password,
+                        "balance": 0.0,
                         "transactions": []
                     }
     except FileNotFoundError:
@@ -68,7 +76,7 @@ load_user_data()  # Load user data from Bank_Data.txt
 
 # Function for user registration
 def register():
-    print(" register here:")
+    print("Register here:")
     username = input("Enter your username: ").strip()
     
     if not username:
@@ -107,7 +115,7 @@ def login():
     return None
 
 # Main application loop
-print("*****Welcome to Five Stars bank App*****")
+print("*****Welcome to Five Stars Bank App*****")
 while True:
     print("1. Register")
     print("2. Login")
@@ -135,7 +143,7 @@ while True:
                         print("How much would you like to deposit?")
                         try:
                             amount = float(input())
-                            if amount >= 20:
+                            if is_valid_amount(amount):
                                 make_deposit(username, amount)
                             else:
                                 print("Invalid deposit amount.")
@@ -146,7 +154,7 @@ while True:
                         print("How much would you like to withdraw?")
                         try:
                             amount = float(input())
-                            if amount >= 20:
+                            if is_valid_amount(amount):
                                 make_withdrawal(username, amount)
                             else:
                                 print("Invalid withdrawal amount.")
@@ -167,7 +175,7 @@ while True:
                 else:
                     print("Invalid choice. Please try again.")
     elif choice == "3":
-        print("Thank you for using the 5 Stars Bank App. Goodbye!")
+        print("Thank you for using the Five Stars Bank App. Goodbye!")
         break
     else:
         print("Invalid choice. Please try again.")
