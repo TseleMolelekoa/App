@@ -1,0 +1,3 @@
+2023-11-02 22:45:54 - User: Tsele - Check Balance - Balance: R0
+2023-11-02 22:46:21 - User: Tsele - Deposit - Balance: R20000.0
+2023-11-02 22:46:44 - User: Tsele - Withdrawal - Balance: R500.0
