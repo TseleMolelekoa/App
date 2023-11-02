@@ -170,7 +170,7 @@ def write_transaction_to_db(username, transaction_type, amount, cursor, conn):
 def write_transaction_log(username, transaction, balance):
     # Get current date and time in the specified format
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open('TransactionLog.txt', 'a') as file:
+    with open('Transaction_log.txt', 'a') as file:
         file.write(f"{current_datetime} - User: {username} - {transaction} - Balance: R{balance}\n")
 
 
