@@ -13,3 +13,4 @@ User: Borah, Date: 2023-11-d 20:12:06, Type: Withdrawal, Amount: R1000.00
 User: Borah, Date: 2023-11-d 20:49:53, Type: Deposit, Amount: R20.00
 User: Borah, Date: 2023-11-d 21:00:56, Type: Deposit, Amount: R4500.00
 User: Borah, Date: 2023-11-d 21:01:35, Type: Deposit, Amount: R20.00
+User: borah, Date: 2023-11-02 23:37:35, Type: Deposit, Amount: R1200.00
