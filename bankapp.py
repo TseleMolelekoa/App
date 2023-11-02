@@ -16,7 +16,7 @@ def log_transaction(username, transaction_type, amount):
     if "transactions" not in user:
         user["transactions"] = []
 
-    current_datetime = datetime.now().strftime("%Y-%m-d %H:%M:%S")
+    current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     transaction = {
         "Date": current_datetime,
         "Type": transaction_type,
@@ -93,23 +93,25 @@ load_user_data()  # Load user data from Bank_Data.txt
 def register():
     print("Register here:")
     username = input("Enter your username: ").strip()
-
+    
     if not username:
-        print("Empty spaces as username are not allowed.")
+        print("Empty spaces as a username are not allowed.")
         return  # Exit the registration function
 
     password = input("Enter your password: ").strip()
 
     if username in user_data:
-        # User with this username already exists, add a new user with the provided password
-        user_data[username].append({
-            "password": password,
-            "balance": 0.0,
-            "transactions": []
-        })
-        print("Registration successful!")
+        user_passwords = [user["password"] for user in user_data[username]]
+        if password in user_passwords:
+            print("This username and password combination already exists. Registration failed.")
+        else:
+            user_data[username].append({
+                "password": password,
+                "balance": 0.0,
+                "transactions": []
+            })
+            print("Registration successful!")
     else:
-        # User with this username doesn't exist, create a new entry with the username and password
         user_data[username] = [{
             "password": password,
             "balance": 0.0,
@@ -174,7 +176,10 @@ while True:
                         print("How much would you like to withdraw?")
                         try:
                             amount = float(input())
-                            make_withdrawal(username, amount)
+                            if is_valid_amount(amount):
+                                make_withdrawal(username, amount)
+                            else:
+                                print("Invalid withdrawal amount.")
                         except ValueError:
                             print("Invalid input. Please enter a valid amount.")
                     else:
