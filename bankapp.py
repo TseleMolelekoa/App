@@ -67,22 +67,24 @@ def load_user_data():
 
 load_user_data()  # Load user data from Bank_Data.txt
 
-# Function for user registration
+ # Function for user registration
 def register():
     print("User Registration")
     username = input("Enter your username: ").strip()
     password = input("Enter your password: ").strip()
 
-    if username in user_data and user_data[username]["password"] != password:
-        print("Username already exists, but you can use a different password.")
+    if username in user_data:
+        if user_data[username]["password"] == password:
+            print("Username and password combination already exists. Registration failed.")
+        else:
+            print("Username already exists, but you can use a different password.")
     else:
-        if username not in user_data:
-            user_data[username] = {
-                "password": password,
-                "balance": 0.0,
-                "transactions": []
-            }
-            print("Registration successful!")
+        user_data[username] = {
+            "password": password,
+            "balance": 0.0,
+            "transactions": []
+        }
+        print("Registration successful!")
 
     # Save user data to Bank_Data.txt
     save_user_data()
