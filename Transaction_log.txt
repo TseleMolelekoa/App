@@ -8,3 +8,4 @@ User: Borah, Date: 2023-11-02 10:31:05, Type: Deposit, Amount: R400.00
 User: sisa, Date: 2023-11-02 11:12:13, Type: Deposit, Amount: R900.00
 User: Borah, Date: 2023-11-02 11:45:45, Type: Deposit, Amount: R20.00
 User: borah, Date: 2023-11-02 12:00:06, Type: Deposit, Amount: R70.00
+User: borah, Date: 2023-11-02 12:12:58, Type: Deposit, Amount: R7000.00
