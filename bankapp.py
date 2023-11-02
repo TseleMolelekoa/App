@@ -55,10 +55,10 @@ def load_user_data():
                 if len(parts) >= 3:
                     username = parts[0]
                     password = parts[1]
-                    
+                    balance = float(parts[2])
                     user_data[username] = {
                         "password": password,
-                        
+                        "balance": balance,
                         "transactions": []
                     }
     except FileNotFoundError:
@@ -99,11 +99,14 @@ def login():
     username = input("Enter your username: ").strip()
     password = input("Enter your password: ").strip()
 
-    if username in user_data and user_data[username]["password"] == password:
-        print("Login successful!")
-        return username
+    if username in user_data:
+        if user_data[username]["password"] == password:
+            print("Login successful!")
+            return username
+
     print("Invalid username or password. Please try again.")
     return None
+
 
 # Main application loop
 while True:
@@ -133,7 +136,7 @@ while True:
                         print("How much would you like to deposit?")
                         try:
                             amount = float(input())
-                            if amount > 0:
+                            if amount >= 20:
                                 make_deposit(username, amount)
                             else:
                                 print("Invalid deposit amount.")
@@ -144,7 +147,7 @@ while True:
                         print("How much would you like to withdraw?")
                         try:
                             amount = float(input())
-                            if amount > 0:
+                            if amount >= 20:
                                 make_withdrawal(username, amount)
                             else:
                                 print("Invalid withdrawal amount.")

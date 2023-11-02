@@ -1,1 +1,8 @@
  
+User: borah, Date: 2023-11-02 13:42:36, Type: Deposit, Amount: R123.00
+User: ase, Date: 2023-11-02 13:47:05, Type: Deposit, Amount: R896.00
+User: ase, Date: 2023-11-02 13:47:50, Type: Deposit, Amount1
+User: Ase, Date: 2023-11-02 14:09:43, Type: Deposit, Amount: R300.00
+User: Ase, Date: 2023-11-02 14:10:23, Type: Withdrawal, Amount: R200.00
+User: Sisanda, Date: 2023-11-02 14:13:03, Type: Deposit, Amount: R200.00
+User: Sisanda, Date: 2023-11-02 14:13:17, Type: Withdrawal, Amount: R10.00
