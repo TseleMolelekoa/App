@@ -52,8 +52,24 @@ def register():
 
 # Function for user login
 def login():
-    username = input("Enter your username: ").strip()
-    password = input("Enter your password: ").strip()
+    #username = input("Enter your username: ").strip()
+    #password = input("Enter your password: ").strip()
+    
+    while True:
+        username = input("Enter your username: ").strip()
+        if username and username.strip() != "":
+            break
+        else:
+            print("Invalid username. Please enter a non-empty username.")
+
+    while True:
+        password = input("Enter your password: ").strip()
+        if password and password.strip() != "":
+            break
+        else:
+            print("Invalid password. Please enter a non-empty password.")
+
+    
 
     with open(bank_data_file, "r") as data_file:
         for line in data_file:
