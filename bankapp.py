@@ -8,17 +8,23 @@ def display_balance(username):
     balance = user_data[username]["balance"]
     print(f"Current Balance for {username}: R{balance:.2f}")
 
-# Function to log a transaction
+ # Function to log a transaction
 def log_transaction(username, transaction_type, amount):
     if "transactions" not in user_data[username]:
         user_data[username]["transactions"] = []
 
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    user_data[username]["transactions"].append({
+    transaction = {
         "Date": current_datetime,
         "Type": transaction_type,
         "Amount": amount
-    })
+    }
+    user_data[username]["transactions"].append(transaction)
+
+    # Write the transaction to a transaction log file
+    with open('transaction_log.txt', 'a') as transaction_file:
+        transaction_file.write(f"User: {username}, Date: {transaction['Date']}, Type: {transaction['Type']}, Amount: R{transaction['Amount']:.2f}\n")
+
 
 # Function to make a deposit
 def make_deposit(username, amount):
@@ -35,20 +41,20 @@ def make_withdrawal(username, amount):
     else:
         print("Insufficient funds. Withdrawal canceled.")
 
- # Function for user registration
+# Function for user registration
 def register():
     print("User Registration")
     username = input("Enter your username: ").strip()
+    password = input("Enter your password: ").strip()
+
     if username in user_data:
-        # Check if the username already exists and if the password is the same
-        password = input("Enter your password: ").strip()
-        if user_data[username]["password"] == password:
-            print("Username and password combination already exists. Registration failed.")
+        # Check if the username exists and if the entered password is different
+        if user_data[username]["password"] != password:
+            user_data[username]["password"] = password
+            print("Password updated successfully.")
         else:
-            print("Username already exists, but you can use a different password.")
+            print("Username and password combination already exists. Registration failed.")
     else:
-        password = input("Enter your password: ").strip()
-        
         user_data[username] = {
             "password": password,
             "balance": 0.0,

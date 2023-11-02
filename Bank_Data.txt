@@ -3,7 +3,6 @@ sisanda,sisa14
 borah,zweni
 borah,Zweni
 borah,Zwemi
-,
 Borah,Zweni
 11111,Zweni
 Thina,Qutsu
