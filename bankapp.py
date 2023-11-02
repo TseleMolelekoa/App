@@ -37,6 +37,14 @@ def register():
     print("User Registration")
     username = input("Enter your username: ").strip()
     password = input("Enter your password: ").strip()
+    
+     # Check if the username already exists in the data file
+    with open(bank_data_file, "r") as data_file:
+        for line in data_file:
+            existing_username, _ = line.strip().split(",")
+            if username == existing_username:
+                print("Username already exists. Registration failed.")
+                return
 
     with open(bank_data_file, "a") as data_file:
         data_file.write(f"{username},{password}\n")
