@@ -1,17 +1,20 @@
 from datetime import datetime
 
-# Dictionary to store user data (username as key, password, balance, and transaction history as values)
+# Dictionary to store user data (username as key, list of user data as values)
 user_data = {}
 
 # Function to display the current balance
 def display_balance(username):
-    balance = user_data[username]["balance"]
+    user = user_data[username][0]  # Get the first user with the provided username
+    balance = user["balance"]
     print(f"Current Balance for {username}: R{balance:.2f}")
 
 # Function to log a transaction
 def log_transaction(username, transaction_type, amount):
-    if "transactions" not in user_data[username]:
-        user_data[username]["transactions"] = []
+    user = user_data[username][0]  # Get the first user with the provided username
+
+    if "transactions" not in user:
+        user["transactions"] = []
 
     current_datetime = datetime.now().strftime("%Y-%m-d %H:%M:%S")
     transaction = {
@@ -19,7 +22,7 @@ def log_transaction(username, transaction_type, amount):
         "Type": transaction_type,
         "Amount": amount
     }
-    user_data[username]["transactions"].append(transaction)
+    user["transactions"].append(transaction)
 
     # Write the transaction to the transaction log file
     with open('transaction_log.txt', 'a') as log_file:
@@ -32,7 +35,8 @@ def is_valid_amount(amount):
 # Function to make a deposit
 def make_deposit(username, amount):
     if is_valid_amount(amount):
-        user_data[username]["balance"] += amount
+        user = user_data[username][0]  # Get the first user with the provided username
+        user["balance"] += amount
         log_transaction(username, "Deposit", amount)
         display_balance(username)
     else:
@@ -40,18 +44,24 @@ def make_deposit(username, amount):
 
 # Function to make a withdrawal
 def make_withdrawal(username, amount):
-    if is_valid_amount(amount) and amount <= user_data[username]["balance"]:
-        user_data[username]["balance"] -= amount
-        log_transaction(username, "Withdrawal", amount)
-        display_balance(username)
+    if is_valid_amount(amount):
+        user = user_data[username][0]  # Get the first user with the provided username
+
+        if amount <= user["balance"]:
+            user["balance"] -= amount
+            log_transaction(username, "Withdrawal", amount)
+            display_balance(username)
+        else:
+            print("Invalid withdrawal amount. Withdrawal amount must be within your balance.")
     else:
-        print("Invalid withdrawal amount. Withdrawal amount must be greater than or equal to 20, a multiple of 10, and within your balance.")
+        print("Invalid withdrawal amount. Withdrawal amount must be greater than or equal to 20 and a multiple of 10.")
 
 # Function to save user data to the Bank_Data.txt file
 def save_user_data():
     with open('Bank_Data.txt', 'w') as data_file:
-        for username, data in user_data.items():
-            data_file.write(f"{username} {data['password']}\n")
+        for username, users in user_data.items():
+            for user in users:
+                data_file.write(f"{username} {user['password']}\n")
 
 # Function to load user data from the Bank_Data.txt file
 def load_user_data():
@@ -62,12 +72,17 @@ def load_user_data():
                 if len(parts) >= 3:
                     username = parts[0]
                     password = parts[1]
-                    
-                    user_data[username] = {
+
+                    user = {
                         "password": password,
                         "balance": 0.0,
                         "transactions": []
                     }
+                    
+                    if username in user_data:
+                        user_data[username].append(user)
+                    else:
+                        user_data[username] = [user]
     except FileNotFoundError:
         # Create the file if it doesn't exist
         open('Bank_Data.txt', 'w').close()
@@ -78,7 +93,7 @@ load_user_data()  # Load user data from Bank_Data.txt
 def register():
     print("Register here:")
     username = input("Enter your username: ").strip()
-    
+
     if not username:
         print("Empty spaces as username are not allowed.")
         return  # Exit the registration function
@@ -86,16 +101,20 @@ def register():
     password = input("Enter your password: ").strip()
 
     if username in user_data:
-        if user_data[username]["password"] == password:
-            print("Username and password combination already exists. Registration failed.")
-        else:
-            print("Username already exists, but you can use a different password.")
-    else:
-        user_data[username] = {
+        # User with this username already exists, add a new user with the provided password
+        user_data[username].append({
             "password": password,
             "balance": 0.0,
             "transactions": []
-        }
+        })
+        print("Registration successful!")
+    else:
+        # User with this username doesn't exist, create a new entry with the username and password
+        user_data[username] = [{
+            "password": password,
+            "balance": 0.0,
+            "transactions": []
+        }]
         print("Registration successful!")
 
     # Save user data to Bank_Data.txt
@@ -107,9 +126,10 @@ def login():
     password = input("Enter your password: ").strip()
 
     if username in user_data:
-        if user_data[username]["password"] == password:
-            print("Login successful!")
-            return username
+        for user in user_data[username]:
+            if user["password"] == password:
+                print("Login successful!")
+                return username
 
     print("Invalid username or password. Please try again.")
     return None
@@ -154,19 +174,17 @@ while True:
                         print("How much would you like to withdraw?")
                         try:
                             amount = float(input())
-                            if is_valid_amount(amount):
-                                make_withdrawal(username, amount)
-                            else:
-                                print("Invalid withdrawal amount.")
+                            make_withdrawal(username, amount)
                         except ValueError:
                             print("Invalid input. Please enter a valid amount.")
                     else:
                         print("Invalid transaction type.")
                 elif option == "2":
-                    if "transactions" in user_data[username]:
+                    if username in user_data:
                         print("Transaction History for", username + ":")
-                        for transaction in user_data[username]["transactions"]:
-                            print(f"Date: {transaction['Date']}, Type: {transaction['Type']}, Amount: R{transaction['Amount']:.2f}")
+                        for user in user_data[username]:
+                            for transaction in user["transactions"]:
+                                print(f"Date: {transaction['Date']}, Type: {transaction['Type']}, Amount: R{transaction['Amount']:.2f}")
                     else:
                         print("No transaction history available.")
                 elif option == "3":
