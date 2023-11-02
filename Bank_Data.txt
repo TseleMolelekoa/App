@@ -5,3 +5,9 @@ borah,Zweni
 borah,Zwemi
 ,
 Borah,Zweni
+11111,Zweni
+Thina,Qutsu
+Thina,Qutsu
+Sisanda,manjanja
+sisanda,manjanja
+Asiphe,asiphe2
