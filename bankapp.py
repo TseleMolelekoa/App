@@ -68,7 +68,7 @@ while True:
     elif choice == "2":
         username = login()
         if username:
-            balance = 0.0  # Initialize user's balance
+            balance = 0.0  # Initialize user's balance to 0.0
             while True:
                 print("1. Make a Transaction")
                 print("2. View Transaction History")
