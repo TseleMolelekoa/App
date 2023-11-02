@@ -1,21 +1,7 @@
-import json
 from datetime import datetime
 
-# Load user data from a JSON file
-def load_user_data():
-    try:
-        with open("user_data.json", "r") as user_data_file:
-            return json.load(user_data_file)
-    except FileNotFoundError:
-        return {}
-
-# Save user data to a JSON file
-def save_user_data(user_data):
-    with open("user_data.json", "w") as user_data_file:
-        json.dump(user_data, user_data_file)
-
-# Initialize user data
-user_data = load_user_data()
+# Dictionary to store user data (username as key, password, balance, and transaction history as values)
+user_data = {}
 
 # Function to display the current balance
 def display_balance(username):
@@ -35,12 +21,9 @@ def log_transaction(username, transaction_type, amount):
     }
     user_data[username]["transactions"].append(transaction)
 
-    # Save the updated user data
-    save_user_data(user_data)
-
-    # Write the transaction to a transaction log file
-    with open('transaction_log.txt', 'a') as transaction_file:
-        transaction_file.write(f"User: {username}, Date: {transaction['Date']}, Type: {transaction['Type']}, Amount: R{transaction['Amount']:.2f}\n")
+    # Write the transaction to the transaction log file
+    with open('transaction_log.txt', 'a') as log_file:
+        log_file.write(f"User: {username}, Date: {transaction['Date']}, Type: {transaction['Type']}, Amount: R{transaction['Amount']:.2f}\n")
 
 # Function to make a deposit
 def make_deposit(username, amount):
@@ -57,28 +40,52 @@ def make_withdrawal(username, amount):
     else:
         print("Insufficient funds. Withdrawal canceled.")
 
+# Function to save user data to the Bank_Data.txt file
+def save_user_data():
+    with open('Bank_Data.txt', 'w') as data_file:
+        for username, data in user_data.items():
+            data_file.write(f"{username} {data['password']} {data['balance']}\n")
+
+# Function to load user data from the Bank_Data.txt file
+def load_user_data():
+    try:
+        with open('Bank_Data.txt', 'r') as data_file:
+            for line in data_file:
+                parts = line.split()
+                if len(parts) >= 3:
+                    username = parts[0]
+                    password = parts[1]
+                    balance = float(parts[2])
+                    user_data[username] = {
+                        "password": password,
+                        "balance": balance,
+                        "transactions": []
+                    }
+    except FileNotFoundError:
+        # Create the file if it doesn't exist
+        open('Bank_Data.txt', 'w').close()
+
+load_user_data()  # Load user data from Bank_Data.txt
+
 # Function for user registration
 def register():
     print("User Registration")
     username = input("Enter your username: ").strip()
     password = input("Enter your password: ").strip()
 
-    # Check if the username already exists
-    if username in user_data:
-        # Check if the entered password is different
-        if user_data[username]["password"] != password:
-            print("You can register with the same username but a different password.")
-        else:
-            print("Username and password combination already exists. Registration failed.")
+    if username in user_data and user_data[username]["password"] != password:
+        print("Username already exists, but you can use a different password.")
     else:
-        user_data[username] = {
-            "password": password,
-            "balance": 0.0,
-        }
-        print("Registration successful!")
+        if username not in user_data:
+            user_data[username] = {
+                "password": password,
+                "balance": 0.0,
+                "transactions": []
+            }
+            print("Registration successful!")
 
-        # Save the updated user data
-        save_user_data(user_data)
+    # Save user data to Bank_Data.txt
+    save_user_data()
 
 # Function for user login
 def login():
@@ -132,6 +139,8 @@ while True:
                             amount = float(input())
                             if amount > 0:
                                 make_withdrawal(username, amount)
+                            else:
+                                print("Invalid withdrawal amount.")
                         except ValueError:
                             print("Invalid input. Please enter a valid amount.")
                     else:

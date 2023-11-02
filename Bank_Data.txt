@@ -1,12 +1,1 @@
-Asekona,Xanywa4
-sisanda,sisa14
-borah,zweni
-borah,Zweni
-borah,Zwemi
-Borah,Zweni
-11111,Zweni
-Thina,Qutsu
-Thina,Qutsu
-Sisanda,manjanja
-sisanda,manjanja
-Asiphe,asiphe2
+borah borah 0.0
