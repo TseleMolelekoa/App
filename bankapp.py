@@ -44,7 +44,7 @@ def make_withdrawal(username, amount):
 def save_user_data():
     with open('Bank_Data.txt', 'w') as data_file:
         for username, data in user_data.items():
-            data_file.write(f"{username} {data['password']} {data['balance']}\n")
+            data_file.write(f"{username} {data['password']}\n")
 
 # Function to load user data from the Bank_Data.txt file
 def load_user_data():
@@ -55,10 +55,10 @@ def load_user_data():
                 if len(parts) >= 3:
                     username = parts[0]
                     password = parts[1]
-                    balance = float(parts[2])
+                    
                     user_data[username] = {
                         "password": password,
-                        "balance": balance,
+                        
                         "transactions": []
                     }
     except FileNotFoundError:
@@ -67,10 +67,15 @@ def load_user_data():
 
 load_user_data()  # Load user data from Bank_Data.txt
 
- # Function for user registration
+  # Function for user registration
 def register():
     print("User Registration")
     username = input("Enter your username: ").strip()
+    
+    if not username:
+        print("Empty spaces as username are not allowed.")
+        return  # Exit the registration function
+
     password = input("Enter your password: ").strip()
 
     if username in user_data:
