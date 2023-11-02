@@ -1,14 +1,28 @@
+import json
 from datetime import datetime
 
-# Dictionary to store user data (username as key, password, balance, and transaction history as values)
-user_data = {}
+# Load user data from a JSON file
+def load_user_data():
+    try:
+        with open("user_data.json", "r") as user_data_file:
+            return json.load(user_data_file)
+    except FileNotFoundError:
+        return {}
+
+# Save user data to a JSON file
+def save_user_data(user_data):
+    with open("user_data.json", "w") as user_data_file:
+        json.dump(user_data, user_data_file)
+
+# Initialize user data
+user_data = load_user_data()
 
 # Function to display the current balance
 def display_balance(username):
     balance = user_data[username]["balance"]
     print(f"Current Balance for {username}: R{balance:.2f}")
 
- # Function to log a transaction
+# Function to log a transaction
 def log_transaction(username, transaction_type, amount):
     if "transactions" not in user_data[username]:
         user_data[username]["transactions"] = []
@@ -21,10 +35,12 @@ def log_transaction(username, transaction_type, amount):
     }
     user_data[username]["transactions"].append(transaction)
 
+    # Save the updated user data
+    save_user_data(user_data)
+
     # Write the transaction to a transaction log file
     with open('transaction_log.txt', 'a') as transaction_file:
         transaction_file.write(f"User: {username}, Date: {transaction['Date']}, Type: {transaction['Type']}, Amount: R{transaction['Amount']:.2f}\n")
-
 
 # Function to make a deposit
 def make_deposit(username, amount):
@@ -48,20 +64,16 @@ def register():
     password = input("Enter your password: ").strip()
 
     if username in user_data:
-        # Check if the username exists and if the entered password is different
-        if user_data[username]["password"] != password:
-            user_data[username]["password"] = password
-            print("Password updated successfully.")
-        else:
-            print("Username and password combination already exists. Registration failed.")
+        print("Username already exists. Registration failed.")
     else:
         user_data[username] = {
             "password": password,
             "balance": 0.0,
-            "transactions": []
         }
         print("Registration successful!")
 
+        # Save the updated user data
+        save_user_data(user_data)
 
 # Function for user login
 def login():

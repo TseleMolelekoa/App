@@ -5,3 +5,4 @@ Deposit: +R200.00
 User: sisanda, Date: 2023-11-02 10:26:50, Type: Withdrawal, Amount: R900.00
 User: sisanda, Date: 2023-11-02 10:29:29, Type: Deposit, Amount: R900.00
 User: Borah, Date: 2023-11-02 10:31:05, Type: Deposit, Amount: R400.00
+User: sisa, Date: 2023-11-02 11:12:13, Type: Deposit, Amount: R900.00
