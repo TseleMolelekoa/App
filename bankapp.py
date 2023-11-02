@@ -147,7 +147,7 @@ def main():
     while True:
         try:
             # User interface
-            print("=================================================\n----------Welcome to the STARS_BankApp!--------- \n=================================================")
+            print("=================================================\n----------Welcome to Thee STARS_BankApp!--------- \n=================================================")
             print("1. Create Account")
             print("2. Login")
             print("3. Exit")
